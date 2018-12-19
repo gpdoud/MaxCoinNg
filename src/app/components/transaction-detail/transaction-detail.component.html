@@ -1,0 +1,27 @@
+<div>
+  <table class="table table-borderless">
+    <tr>
+      <th>Id</th>
+      <td>{{ transaction.Id }}</td>
+      <th>Hash</th>
+      <td>{{ transaction.Hash }}</td>
+    </tr>
+    <tr>
+      <td colspan="2" style="width:49%;">
+        <table class="table table-borderless">
+          <tr *ngFor="let txin of transaction.TxIns">
+            <td>PrevTxOutId: {{ txin.PrevTxOutId }}</td>
+          </tr>
+        </table>
+      </td>
+      <td colspan="2" style="width:49%;">
+        <table class="table table-borderless">
+          <tr *ngFor="let txout of transaction.TxOuts">
+            <td>UserKey: {{ txout.UserKey }}</td>
+            <td>Value: {{ txout.Value }}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>

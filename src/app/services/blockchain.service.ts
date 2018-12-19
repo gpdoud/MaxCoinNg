@@ -7,13 +7,20 @@ import { Block } from '../models/block.class';
 })
 export class BlockchainService {
 
-  blockchain = [];
+  blocks = [];
 
   getLastBlock(): Block {
-    return this.blockchain[this.blockchain.length - 1];
+    return this.blocks[this.blocks.length - 1];
   }
   getNextBlockIndex(): number {
     return this.getLastBlock().index + 1;
+  }
+
+  createBlockInstance() : Block {
+    let blk = new Block();
+    blk.index = this.getNextBlockIndex();
+    blk.phash = this.getLastBlock().hash;
+    return blk;
   }
 
   addBlock(block: Block) {
@@ -21,22 +28,23 @@ export class BlockchainService {
     if(block.index != lastBlock.index + 1) {
       throw "Block has the wrong index.";
     }
+    block.phash = lastBlock.hash;
     let blockHash = block.genBlockHash();
     if(blockHash !== block.hash) {
-      throw "Invalid block hash.";
+      // throw "Invalid block hash.";
     }
-    this.blockchain.push(block);
+    this.blocks.push(block);
   }
 
   init() {
-    let genesisBlock = Block.genesisBlock();
+    let genesisBlock = (new Block()).genesisBlock();
     let index = genesisBlock.index;
-    this.blockchain.push(genesisBlock);
+    this.blocks.push(genesisBlock);
     this.dump();
   }
 
   dump() {
-    console.log(this.blockchain);
+    console.log(this.blocks);
   }
 
   constructor() {

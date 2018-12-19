@@ -4,7 +4,7 @@ import { TxOut } from './txout.class';
 export class TxIn extends TxBase {
 
     PrevTxOutId: number;
-    TxOut: TxOut;
+    TxOut: TxOut; // is this used???
 
     constructor(UserKey: string) {
         super();

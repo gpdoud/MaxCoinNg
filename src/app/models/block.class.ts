@@ -2,6 +2,7 @@ import { sha256 } from 'js-sha256';
 import { Transaction } from './transaction.class';
 import { BlockMining } from './block-mining.class';
 import { MerkleRoot } from './merkle-root.class';
+
 export class Block {
 
     hash: string;
@@ -12,7 +13,7 @@ export class Block {
     merkle: string;
     nonce: number;
 
-    static genesisBlock(): Block {
+    genesisBlock(): Block {
         let genesis = new Block();
         genesis.index = 0;
         let tran = new Transaction();
@@ -32,6 +33,10 @@ export class Block {
         this.nonce = 0;
     }
 
+    getLastBlockHash() {
+        return '';
+    }
+
     setMerkleRoot() {
         let hashes = [];
         for(let tran of this.trans) {
@@ -49,6 +54,7 @@ export class Block {
 
     setBlockHash(): void {
         this.setMerkleRoot();
+        this.phash = this.getLastBlockHash();
         this.hash = this.genBlockHash();
     }
     genBlockHash(): string {
