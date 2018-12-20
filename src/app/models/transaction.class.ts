@@ -11,6 +11,13 @@ export class Transaction {
     TxIns: TxIn[];
     TxOuts: TxOut[];
     Hash: string;
+    
+    Json = {
+        Id: this.Id,
+        TxIns: this.TxIns,
+        TxOuts: this.TxOuts,
+        Hash: this.Hash
+    }
 
     constructor() {
         this.Id = Transaction.nextId++;
