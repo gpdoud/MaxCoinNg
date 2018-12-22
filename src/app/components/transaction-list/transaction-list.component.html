@@ -1,9 +1,5 @@
 <div>
   <table class="table table-borderless">
-    <tr *ngFor="let transaction of transactions">
-      <td colspan="2">
-        <app-transaction-detail [transaction]="transaction"></app-transaction-detail>
-      </td>
-    </tr>
+    <app-transaction-detail *ngFor="let transaction of transactions" [transaction]="transaction"></app-transaction-detail>
   </table>
 </div>

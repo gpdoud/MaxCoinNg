@@ -14,18 +14,9 @@ export class TransactionService {
   get(): Observable<TransactionServer[]> {
     return this.http.get(this.url) as Observable<TransactionServer[]>;
   }
+
   post(json): Observable<boolean> {
     return this.http.post(`${this.url}`, json) as Observable<boolean>;
-  }
-
-  transactions: Transaction[] = [];
-
-  addTransaction(tran: Transaction): void {
-    this.transactions.push(tran);
-  }
-
-  dump() {
-    console.log("Transactions:", this.transactions);
   }
 
   constructor(private http: HttpClient) { }

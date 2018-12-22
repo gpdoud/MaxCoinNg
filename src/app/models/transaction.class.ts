@@ -1,6 +1,7 @@
 import { sha256 } from 'js-sha256';
 import { TxIn } from './txin.class';
 import { TxOut } from './txout.class';
+import { TransactionServer } from './transaction-server.class';
 
 export class Transaction {
 
@@ -17,6 +18,11 @@ export class Transaction {
         TxIns: this.TxIns,
         TxOuts: this.TxOuts,
         Hash: this.Hash
+    }
+
+    static createTransactionInstance(ts: TransactionServer): Transaction {
+        let tran = ts.toTransaction();
+        return tran;
     }
 
     constructor() {

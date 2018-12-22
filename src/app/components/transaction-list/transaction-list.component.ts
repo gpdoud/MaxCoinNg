@@ -11,43 +11,44 @@ import { TransactionServer } from '../../models/transaction-server.class';
 })
 export class TransactionListComponent implements OnInit {
 
-  transactionServers: TransactionServer[];
   transactions: Transaction[];
 
   constructor(private transvc: TransactionService) { }
 
   ngOnInit() {
-    let t = new Transaction();
-    t.outTran("Bank", 1000);
-    t.finalize();
-    this.transvc.addTransaction(t);
-
-    let ts = new TransactionServer(t);
-    
-    let t2 = new Transaction();
-    t2.inOutTran("Bank", "Greg", 200);
-    t2.finalize();
-    this.transvc.addTransaction(t2);
-    
-    let ts2 = new TransactionServer(t2);
-    this.transvc.post(ts).subscribe(resp => {
-      console.log(resp);
-      this.transvc.post(ts2).subscribe(resp => {
-        console.log(resp);
-      });
-    });
-
-    this.transactions = this.transvc.transactions;
 
     this.transvc.get().subscribe(resp => {
-      console.log(resp);
-      this.transactionServers = resp;
-      let ts1 = this.transactionServers[15];
-      console.log("ts1", ts1.json);
-      let tsjs = JSON.parse(ts1.json);
-      console.log("Ts.Json", tsjs);
+      this.transactions = [];
+      for(let ts of resp) {
+        let transvr = new TransactionServer(ts);
+        let tran = Transaction.createTransactionInstance(transvr);
+        this.transactions.push(tran);
+      }
+      console.log(this.transactions);
     })
-    console.log(this.transactions);
+
+    // let t = new Transaction();
+    // t.outTran("Bank", 1000);
+    // t.finalize();
+    // this.transvc.addTransaction(t);
+
+    // let ts = new TransactionServer(t);
+    
+    // let t2 = new Transaction();
+    // t2.inOutTran("Bank", "Greg", 200);
+    // t2.finalize();
+    // this.transvc.addTransaction(t2);
+    
+    // let ts2 = new TransactionServer(t2);
+    // this.transvc.post(ts).subscribe(resp => {
+    //   console.log(resp);
+    //   this.transvc.post(ts2).subscribe(resp => {
+    //     console.log(resp);
+    //   });
+    // });
+
+    // this.transactions = this.transvc.transactions;
+
   }
 
 }
